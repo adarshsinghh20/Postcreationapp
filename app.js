@@ -20,8 +20,8 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/profile",isloggedin,async(req, res) => {
-  console.log(req.user);
-  let user= await userModel.findOne({email:req.user.email})
+ 
+  let user= await userModel.findOne({email:req.user.email}).populate("posts");
   res.render("profile",{user});
 });
 
@@ -89,8 +89,21 @@ next();
 }
 }
 
+////...................Post Routes................////
 
+app.post("/post", isloggedin, async (req, res) => {
+  
+  let user = await userModel.findOne({ email: req.user.email });
+  let {content}=req.body;
+  let post = await postModel.create({
+    user:user._id,
+    content: content
 
+  });
+user.posts.push(post._id);
+await user.save();
+res.redirect("/profile")
+});
 
 
 

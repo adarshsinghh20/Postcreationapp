@@ -15,13 +15,40 @@
 
     <h3 class="text-2xl mb-10 mt-5"><span class="font-bold">Hello</span>, <%=user.name%> 👋</h3>
     <h5 class="mb-4">Write Your Posts Here 👇</h5>
-    <form action="">
-        <textarea name="" id="" class=" bg-transparent border-2 border-zinc-800 rounded-md resize-none w-1/2 h-50 p-3 outline-none" placeholder="What's on your mind ?"></textarea>
+
+    <form action="/post" method="post">
+        <textarea name="content" id="" class=" bg-transparent border-2 border-zinc-800 rounded-md resize-none w-1/2 h-50 p-3 outline-none" placeholder="What's on your mind ?"></textarea>
 
         <input type="submit" value="Create New Post" class="bg-green-800 px-4 py-2 rounded-md block w-70 mt-5">
-        
-    </form>
+         
+    </form> 
 
+<div class="posts mt-20">
+<h3 class="text-zinc-400 text-xl mb-4">Your Posts</h3>
+<div class="postcontainer w-full flex flex-row gap-2 ">
+      
+    <%user.posts.reverse().forEach(function(post){ %>  
+    <div class="post w-1/3 p-5 border-zinc-800 border-2 rounded-md">
+      <h4 class="font-bold mb-2"> @<%=user.username%></h4>
+      <p> <p><%- post.content.replace(/\n/g, '<br>') %></p>
+
+      
+      <div class="buttons flex gap-4 mt-4">
+        <a href="" class="text-blue-400 font-bold">Like</a>
+        <a href="" class="text-red-400 font-bold">Edit</a>
+      </div>
+    </div>
+    <%})%>
+
+   
+
+    </div>
+
+     
+
+</div>
+
+</div>
 
     </div>
 </body>
