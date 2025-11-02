@@ -6,3 +6,4 @@ Goals =>
 5. Post creation 
 6. Post Like
 7. Post Delete
+8. Login Middleware Verification Used
