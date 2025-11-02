@@ -19,12 +19,11 @@ app.get("/register", (req, res) => {
   res.render("index");
 });
 
-app.get("/profile",isloggedin,(req, res) => {
+app.get("/profile",isloggedin,async(req, res) => {
   console.log(req.user);
-  res.render("login");
+  let user= await userModel.findOne({email:req.user.email})
+  res.render("profile",{user});
 });
-
-
 
 app.get("/login", (req, res) => {
   res.render("login");
@@ -39,13 +38,12 @@ app.post('/login', async (req, res) => {
     if(result){ 
      let token=jwt.sign({email:email, userid: user._id}, "adsin");
         res.cookie("token",token)
-        res.status(200).send("You can Login");
+        res.status(200).redirect("/profile");
   }
     else res.redirect("/login")
 })
 
 })
-
 
 
 app.post('/register', async (req, res) => {
@@ -73,14 +71,15 @@ app.post('/register', async (req, res) => {
 
 });
 
-
 app.get("/logout", (req, res) => {
   res.cookie("token","");
   res.redirect("/")
 });
 
+// Middleware for logged in checking......
+
 function isloggedin(req,res,next){
-  if(req.cookies.token==="") res.send("You must be logged in ");
+  if(!(req.cookies.token)) res.send("You must be logged in ");
 
 else {
   let data = jwt.verify(req.cookies.token,"adsin")
@@ -89,6 +88,9 @@ else {
 next();
 }
 }
+
+
+
 
 
 
