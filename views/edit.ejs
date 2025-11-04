@@ -13,10 +13,10 @@
 
     <h5 class="mb-4">Update Your Posts Here 👇</h5>
 
-    <form action="/post" method="post">
+    <form action="/update/<%=post._id %>" method="post">
         <textarea name="content" id="" class=" bg-transparent border-2 border-zinc-800 rounded-md resize-none w-1/2 h-50 p-3 outline-none" placeholder="What's on your mind ?"></textarea>
 
-        <input type="submit" value="Update Post" class="bg-green-800 px-4 py-2 rounded-md block w-70 mt-5">
+        <input type="submit" value="Update Post" class="bg-yellow-800 px-4 py-2 rounded-md block w-70 mt-5">
          
     </form> 
 

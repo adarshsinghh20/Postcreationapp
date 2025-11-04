@@ -35,9 +35,11 @@
       <h4 class="font-bold mb-2"> @<%=user.username%></h4>
       <p> <p><%- post.content.replace(/\n/g, '<br>') %></p>
 
-      
-      <div class="buttons flex gap-4 mt-4">
-        <a href="" class="text-blue-400 font-bold">Like</a>
+      <small class="block mt-5 "><%=post.likes.length%> likes</small>
+      <div class="buttons flex gap-4 mt-1">
+        <a href="/like/<%=post._id%>" class="text-blue-400 font-bold">
+            <%= post.likes.indexOf(user._id)===-1 ?"Like" : "Unlike"%>
+        </a>
         <a href="/edit/<%=post._id%>" class="text-red-400 font-bold">Edit</a>
       </div>
     </div>

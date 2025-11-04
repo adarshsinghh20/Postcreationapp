@@ -114,14 +114,41 @@ await user.save();
 res.redirect("/profile")
 });
 
+
+////...................like Routes................////
+
+
+app.get("/like/:id",isloggedin, async (req, res) => {
+    let post = await postModel.findOne({_id:req.params.id}).populate("user")
+   if(post.likes.indexOf(req.user.userid) === -1){
+    post.likes.push(req.user.userid);
+   }
+   else{
+       post.likes.splice(post.likes.indexOf(req.user.userid),1);
+   }
+
+
+     
+    await post.save();
+    res.redirect("/profile");
+});
+
+
+
+
 ////...................edit Routes................////
 
 app.get("/edit/:id", isloggedin, async (req, res) => {
   let post = await postModel.findOne({ _id: req.params.id }).populate("user");
-  res.render("edit");
+  res.render("edit",{post});
   
 });
 
+app.post("/update/:id", isloggedin, async (req, res) => {
+  
+  let post = await postModel.findOneAndUpdate({_id: req.params.id },{content:req.body.content});
+  res.redirect("/profile");
+});
 ////..............................Multer................
 
 app.get("/profile/upload", (req, res) => {
